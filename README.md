@@ -7,18 +7,18 @@
 1. Navigate to 
 
 ```
-    cd /boot/
+    # cd /boot/
 ```
 
 2. Create a copy of your ```uEnv.txt``` in case anything goes wrong
 
 ```
-    sudo cp /boot/uEnv.txt /boot/uEnv-BeforeAddCapes.txt
+    # sudo cp /boot/uEnv.txt /boot/uEnv-BeforeAddCapes.txt
 ```
 
 3. Open the ```uEnv.txt``` file to edit
 ```
-    sudo nano uEnv.txt
+    # sudo nano uEnv.txt
 ```
 
 4. Add these additional capes under ```###Additional custom capes```
