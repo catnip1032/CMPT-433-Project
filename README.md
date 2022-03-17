@@ -4,7 +4,7 @@
 
 #### Edit the device tree on your BeagleBone Green:
 
-    1. Navigate to 
+    1) Navigate to 
 
     ```cd /boot/
     ```
@@ -28,4 +28,3 @@
     ```
 
     5. Reboot your BeagleBone Green
-
