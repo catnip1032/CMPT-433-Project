@@ -23,7 +23,7 @@ sudo nano uEnv.txt
 
 4. Add these additional capes under ```###Additional custom capes```
 ```
-###Additional custom capes
+    ###Additional custom capes
     uboot_overlay_addr4=/lib/firmware/BB-BONE-AUDI-02-00A0.dtbo
     uboot_overlay_addr5=/lib/firmware/BB-I2C1-00A0.dtbo
     uboot_overlay_addr6=/lib/firmware/BB-PWM0-00A0.dtbo
