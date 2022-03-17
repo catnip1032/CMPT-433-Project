@@ -13,7 +13,7 @@
 2. Create a copy of your ```uEnv.txt``` in case anything goes wrong
 
 ```
-    sudo cp /boot/uEnv.txt /boot/uEnv-BeforePwm.txt
+    sudo cp /boot/uEnv.txt /boot/uEnv-BeforeAddCapes.txt
 ```
 
 3. Open the ```uEnv.txt``` file to edit
