@@ -1,8 +1,8 @@
-# CMPT-433-Project READ ME
+# CMPT 433 Project - Read Me
 
-### Must do before execution
+## Must do before execution
 
-#### Edit the device tree on your BeagleBone Green:
+### Edit the device tree on your BeagleBone Green:
 
 1. Navigate to 
 
