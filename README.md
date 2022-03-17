@@ -2,7 +2,7 @@
 
 ## Must do before execution
 
-### Edit the device tree on your BeagleBone Green:
+### Edit the device tree on your BeagleBone Green to include Audio, I2C, and PWM capes:
 
 1. Navigate to 
 
