@@ -13,7 +13,8 @@ TARGET_DIR = $(CMPT433_DIR)/public/myApps
 ## C Compiler
 # Runs a script to determine the installed C compiler on the machine.
 # Some group members use arm-none-linux-gnueabihf-gcc as an alternative,
-# so this is necessary. If it is not found, arm-linux-gnueabihf-gcc will be used.
+# so this is necessary. If arm-none-linux-gnueabihf-gcc is not found,
+# arm-linux-gnueabihf-gcc will be used instead.
 CC = $(shell command -v arm-none-linux-gnueabihf-gcc &> /dev/null)
 ifndef $(CC)
 	CC := arm-linux-gnueabihf-gcc
