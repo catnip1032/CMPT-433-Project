@@ -35,7 +35,7 @@ main () {
   STAGED_FILES="$(git diff --name-only --cached '*.c' '*.h')"
 
   # No Staged Files Reminder
-  if [ -z $STAGED_FILES ]; then
+  if [ -z "$STAGED_FILES" ]; then
     echo "There are no staged files! Remember to add them with 'git add <file>'"
     return 1
   fi
