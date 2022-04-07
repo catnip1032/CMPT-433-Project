@@ -15,7 +15,7 @@ TARGET_DIR = $(CMPT433_DIR)/public/myApps
 # Some group members use arm-none-linux-gnueabihf-gcc as an alternative,
 # so this is necessary. If arm-none-linux-gnueabihf-gcc is not found,
 # arm-linux-gnueabihf-gcc will be used instead.
-ifndef $(shell arm-linux-gnueabihf-gcc --version &> /dev/null)
+ifeq (, $(shell arm-linux-gnueabihf-gcc --version &> /dev/null))
 	CC := arm-none-linux-gnueabihf-gcc
 else
 	CC := arm-linux-gnueabihf-gcc
