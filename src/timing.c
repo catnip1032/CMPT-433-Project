@@ -1,5 +1,5 @@
 /*
- * The timing module wraps the nanosleep function for easier usage.
+ * The timing module wraps the nanosleep function from time.h for easier usage.
  */
 
 #include "../include/timing.h"
