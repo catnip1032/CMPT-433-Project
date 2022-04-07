@@ -15,12 +15,8 @@ TARGET_DIR = $(CMPT433_DIR)/public/myApps
 # Some group members use arm-none-linux-gnueabihf-gcc as an alternative,
 # so this is necessary. If arm-none-linux-gnueabihf-gcc is not found,
 # arm-linux-gnueabihf-gcc will be used instead.
-CC = $(shell command -v arm-none-linux-gnueabihf-gcc)
-ifndef CC
-	CC := arm-linux-gnueabihf-gcc
-else
-	CC := arm-none-linux-gnueabihf-gcc
-endif
+CC = $(if $(shell command -v arm-linux-gnueabihf-gcc), \
+		 arm-linux-gnueabihf-gcc, arm-none-linux-gnueabihf-gcc)
 
 ## Compilation Flags
 LFLAGS = -lpthread
@@ -58,6 +54,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 
 build/%.o: $(SRC_DIR)/%.c $(wildcard $(INCLUDE_DIR)/%.h)
+	@echo $(CC)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ## Phony targets
