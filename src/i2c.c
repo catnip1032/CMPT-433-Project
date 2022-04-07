@@ -110,14 +110,8 @@ static void getP9DataAndClockPinsForI2cBusNum(int32_t busNum,
 static void setI2cBusPinToI2cMode(const char *p9DataPinStr)
 {
   const char *argsData[] = {p9DataPinStr, "i2c"};
-  const char *errMessage = Shell_execCommand(
-      "/usr/bin/config-pin", argsData, sizeof(argsData) / sizeof(argsData[0]));
-
-  if (errMessage != NULL) {
-    printf("There was an error setting P9 header pins to I2C mode!: %s",
-           errMessage);
-    exit(1);
-  }
+  Shell_execCommand("/usr/bin/config-pin", argsData,
+                    sizeof(argsData) / sizeof(argsData[0]));
 }
 
 void I2c_writeI2cReg(int32_t i2cFileDesc, uint8_t regAddr, uint8_t value)
