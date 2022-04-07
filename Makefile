@@ -15,8 +15,11 @@ TARGET_DIR = $(CMPT433_DIR)/public/myApps
 # Some group members use arm-none-linux-gnueabihf-gcc as an alternative,
 # so this is necessary. If arm-none-linux-gnueabihf-gcc is not found,
 # arm-linux-gnueabihf-gcc will be used instead.
-CC = $(if $(shell command -v arm-linux-gnueabihf-gcc), \
-		 arm-linux-gnueabihf-gcc, arm-none-linux-gnueabihf-gcc)
+ifndef $(shell which arm-linux-gnueabihf-gcc)
+	CC := arm-none-linux-gnueabihf-gcc
+else
+	CC := arm-linux-gnueabihf-gcc
+endif
 
 ## Compilation Flags
 LFLAGS = -lpthread
