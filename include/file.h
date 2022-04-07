@@ -1,9 +1,8 @@
 /*
  * The File module provides a simplified interface to interact with files
- * on the filesystem. Reading and writing operations are permitted, but
- * care should be taken to free any pointers to allocated memory returned
- * by this module's functions. This module also exports useful file path
- * constants to interact with the BBG's GPIO via the Linux filesystem.
+ * on the filesystem. Reading and writing operations are permitted.
+ * This module also exports useful file path concatenation to create file paths
+ * that may interact with the BBG's GPIO and PWM via the Linux filesystem.
  */
 
 #ifndef FILE_GAURD
