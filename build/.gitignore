@@ -1,1 +1,8 @@
+# ignore object files
 *.o
+
+# ignore log files
+*.log
+
+# ignore settings.json
+settings.json
