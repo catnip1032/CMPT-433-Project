@@ -9,6 +9,6 @@
 #define TIMING_H_GAURD
 
 // Pause the thread execution for seconds + nanoseconds;
-void Timing_nanoSleep(int64_t seconds, int64_t nanoseconds);
+void Timing_nanoSleep(int64_t _seconds, int64_t _nanoseconds);
 
 #endif

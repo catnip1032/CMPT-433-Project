@@ -12,7 +12,7 @@
 
 // blocks and returns NULL if successful, a string pointer with an error message
 // if not.
-const char *Shell_execCommand(const char *pCommandNameIn, const char *pArgsIn[],
-                              size_t numArgs);
+const char *Shell_execCommand(const char *_pCommandNameIn,
+                              const char *_pArgsIn[], size_t _numArgs);
 
 #endif
