@@ -5,6 +5,7 @@
  * I2C device registers.
  */
 
+#include <stddef.h>
 #include <stdint.h>
 
 #ifndef I2C_GAURD
@@ -27,6 +28,6 @@ void I2c_writeI2cReg(int32_t i2cFileDesc, uint8_t regAddr, uint8_t value);
  * of bytes to read, read the number of bytes starting at the register address
  * into pBufferOut. */
 void I2c_readI2cReg(int32_t i2cFileDesc, uint8_t regAddr, uint8_t *pBufferOut,
-                    int32_t numBytesToRead);
+                    size_t numBytesToRead);
 
 #endif

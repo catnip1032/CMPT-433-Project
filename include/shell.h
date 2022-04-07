@@ -5,12 +5,14 @@
  * Provides error messages for failures.
  */
 
+#include <stddef.h>
+
 #ifndef SHELL_GAURD
 #define SHELL_GAURD
 
 // blocks and returns NULL if successful, a string pointer with an error message
 // if not.
 const char *Shell_execCommand(const char *pCommandNameIn, const char *pArgsIn[],
-                              int numArgs);
+                              size_t numArgs);
 
 #endif

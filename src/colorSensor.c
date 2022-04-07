@@ -31,7 +31,7 @@ static const int32_t BLUE_LUMINANCE_OUT_INDEX = 1;
 static const int32_t GREEN_LUMINANCE_OUT_INDEX = 2;
 static const int32_t IR_LUMINANCE_OUT_INDEX = 3;
 static const int32_t AMBIENT_LIGHT_LUMINANCE_OUT_INDEX = 4;
-static const int32_t LUMINANCE_OUTPUT_ARRAY_SIZE = 5;
+static const size_t LUMINANCE_OUTPUT_ARRAY_SIZE = 5;
 
 // Function Prototype declarations
 // ----------------------------------------------------------------------------
@@ -65,7 +65,10 @@ void ColorSensor_init(int32_t i2cBusNum)
   Timing_nanoSleep(1, 0);
 }
 
-void ColorSensor_cleanup() { I2c_closeI2cDevice(i2cFileBusDescriptor); }
+void ColorSensor_cleanup(void)
+{
+  I2c_closeI2cDevice(i2cFileBusDescriptor);
+}
 
 void ColorSensor_getRgbValues(int32_t *pRgbValuesOut)
 {

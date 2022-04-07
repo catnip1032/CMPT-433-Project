@@ -5,13 +5,15 @@
 
 #include "../include/shell.h"
 #include <errno.h>
+#include <stddef.h>
+#include <stdint.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
 // returns NULL if successful, a string pointer with an error message if not.
 const char *Shell_execCommand(const char *pCommandNameIn, const char *pArgsIn[],
-                              int numArgs)
+                              size_t numArgs)
 {
   // Generate null-terminated array from args with command name
   const char *argsTerminated[numArgs + 2];
@@ -23,7 +25,7 @@ const char *Shell_execCommand(const char *pCommandNameIn, const char *pArgsIn[],
   pid_t childPid = fork();
   const char *error = NULL;
   if (childPid == 0) {
-    int e = execv(pCommandNameIn, (char *const *)argsTerminated);
+    int32_t e = execv(pCommandNameIn, (char *const *)argsTerminated);
     if (e == -1) {
       error = strerror(errno);
     }
