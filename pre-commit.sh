@@ -56,6 +56,7 @@ main () {
     return 1
   fi
   
+  echo "Staged .c and .h files have been formatted, staged, and are ready to commit!"
   return 0
 }
 
