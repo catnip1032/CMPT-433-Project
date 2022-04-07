@@ -44,6 +44,16 @@ must free the memory.
 ```
 GPIO_getGpio(args...)
 ```
+- Global variables must be prefixed with `m_`, arguments must be prefixed with
+`_`, and function variables do not require any prefix. Example:
+```
+static int m_globalVariable = 0;
+
+int foo(char _c) {
+    char anotherChar = _c;
+    return 1;
+  }
+```
 
 ## Building
 **make OR make all:** Compiles the files from `src` including the header files 
@@ -91,6 +101,17 @@ in `build`.
 ```
 
 5. Reboot your BeagleBone Green
+
+## Git Workflow
+ - Attempt to limit the scope of your work to a git issue. If no git issue 
+exists for the work that you will be doing, create a new git issue for that
+task.
+ - Isolate your work on a branch that corresponds to its git issue. Try to
+abide to the following format: *#-issue-name*, where '#' is the issue number
+and "issue-name" is the respective issue name.
+ - After work is ready to merge, make a pull request and wait for someone to
+ review your changes.
+ - Make use of git issues to comment on each other's work as needed.
 
 ## Tests
 Must be written...
