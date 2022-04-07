@@ -44,6 +44,16 @@ must free the memory.
 ```
 GPIO_getGpio(args...)
 ```
+- Global variables must be prefixed with `m_`, arguments must be prefixed with
+`_`, and function variables do not require any prefix. Example:
+```
+static int m_globalVariable = 0;
+
+int foo(char _c) {
+    char anotherChar = _c;
+    return 1;
+  }
+```
 
 ## Building
 **make OR make all:** Compiles the files from `src` including the header files 
