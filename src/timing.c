@@ -9,7 +9,8 @@
 #include <string.h>
 #include <time.h>
 
-void Timing_nanoSleep(int64_t _seconds, int64_t _nanoseconds) {
-	struct timespec delay = {_seconds, _nanoseconds};
-	nanosleep(&delay, (struct timespec *)NULL);
+void Timing_nanoSleep(int64_t _seconds, int64_t _nanoseconds)
+{
+  struct timespec delay = {_seconds, _nanoseconds};
+  nanosleep(&delay, (struct timespec *)NULL);
 }

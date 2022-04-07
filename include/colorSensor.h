@@ -9,9 +9,9 @@
 #ifndef COLORSENSOR_GAURD
 #define COLORSENSOR_GAURD
 typedef enum {
-	COLOR_SENSOR_RED,
-	COLOR_SENSOR_GREEN,
-	COLOR_SENSOR_BLUE,
+  COLOR_SENSOR_RED,
+  COLOR_SENSOR_GREEN,
+  COLOR_SENSOR_BLUE,
 } eColorSensorColor;
 
 // i2cBusNum is the i2c bus number that the color sensor is attached to
