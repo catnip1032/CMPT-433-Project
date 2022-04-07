@@ -10,20 +10,20 @@
 #include <unistd.h>
 
 // returns NULL if successful, a string pointer with an error message if not.
-const char *Shell_execCommand(const char *pCommandName, const char *args[],
+const char *Shell_execCommand(const char *pCommandNameIn, const char *pArgsIn[],
                               int numArgs)
 {
   // Generate null-terminated array from args with command name
   const char *argsTerminated[numArgs + 2];
-  memcpy(&argsTerminated[1], args, numArgs * sizeof(args[0]));
-  argsTerminated[0] = pCommandName;
+  memcpy(&argsTerminated[1], pArgsIn, numArgs * sizeof(pArgsIn[0]));
+  argsTerminated[0] = pCommandNameIn;
   argsTerminated[numArgs + 1] = (const char *)0;
 
   // Execute command-line program
   pid_t childPid = fork();
   const char *error = NULL;
   if (childPid == 0) {
-    int e = execv(pCommandName, (char *const *)argsTerminated);
+    int e = execv(pCommandNameIn, (char *const *)argsTerminated);
     if (e == -1) {
       error = strerror(errno);
     }
