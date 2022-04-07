@@ -57,7 +57,6 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 
 build/%.o: $(SRC_DIR)/%.c $(wildcard $(INCLUDE_DIR)/%.h)
-	@echo $(CC)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ## Phony targets
