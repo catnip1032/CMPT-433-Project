@@ -1,4 +1,63 @@
-# CMPT 433 Project - Read Me
+#Recycler
+## Directory Structure
+- **src:** Add source (.c) files to this directory (except for test.c; see 
+section Tests).
+- **include**: Add header files (.h) to this directory.
+- **build**: Where all object files (.o) will be placed during building. There 
+is no necessity for  anything to be added to this directory. 
+This directory SHOULD NOT be committed.
+- **test**: Where test.c and other necessary test files should be included.
+
+## Style and Other Guidelines
+- Indentation: 2 columns (tab).
+- Wrap at 80 characters.
+- R&K brackets style:
+```
+if (condition) {
+	action
+}
+```
+- Try to abide to other style guidelines as prescribed by the course website.
+- Separate logical sections of the code with a section name (e.g. Definitions,
+Function Implementations) followed by a newline, two comment bars, a space and
+exactly 76 dashes. Example:
+```
+GPIO Functions
+// ----------------------------------------------------------------------------
+```
+- Everything, except for functions and variables included in the header files,
+should be static.
+- Use `stdint` types (e.g. `uint_8`, `uint_64`) for integers.
+- Use `bool` for boolean literals.
+- Use `typedef` for defining structs, enums, and primitive data types that have
+a certain context.
+- Unless casting a `void *` or among primitive data types, prefer defining a
+function that takes in a data type and returns another data type.
+- Every module that comprises a functionality of the program should have its
+`initiate` and `terminate` functions, even if they don't do anything. This does
+not apply for "utility" modules (e.g. modules with "library" functions, such as
+math functions, or algorithms that don't comprise part of the program's
+behavior).
+- Functions that allocate memory should have a comment stating that the caller
+must free the memory.
+- Function names should start with the module name followed by what it does:
+```
+GPIO_getGpio(args...)
+```
+
+## Building
+**make OR make all:** Compiles the files from `src` including the header files 
+in `include`, producing object files to `build` and generating the binary to 
+`~/cmpt433/public/myApps`. Creates the aforementioned folder structure if it 
+does not exist.
+
+**make test:** Compiles the files from `src` (except for the file `main.c`), 
+the file `test/test.c`, including the header files in `include`, producing 
+object files to `build` and generating the binary to `~/cmpt433/public/tests`. 
+Creates the aforementioned folder structure if it does not exist.
+
+**make clean**: Removes the produced binary, the test binary, and all objects 
+in `build`.
 
 ## Must do before execution
 
@@ -32,3 +91,8 @@
 ```
 
 5. Reboot your BeagleBone Green
+
+## Tests
+Must be written...
+
+
