@@ -31,9 +31,9 @@ static void getBusNameStringFromBusNum(char *pBusNameBuffer, int32_t bufferSize,
 static void setI2cBusPinToI2cMode(const char *p9DataPinStr);
 static int setI2CDeviceToSlaveAddress(const char *pBusName,
                                       int32_t deviceAddress);
-static void writeRegAddrToI2cBus(int32_t i2cFileDesc, unsigned char regAddr);
+static void writeRegAddrToI2cBus(int32_t i2cFileDesc, uint8_t regAddr);
 static void readBytesFromRegAddr(int32_t i2cFileDesc,
-                                 unsigned char *pValueOutput,
+                                 uint8_t *pValueOutput,
                                  int32_t sizeofValueOutput);
 
 int32_t I2c_initI2cDevice(int32_t busNum, int32_t deviceAddress)
@@ -51,8 +51,6 @@ int32_t I2c_initI2cDevice(int32_t busNum, int32_t deviceAddress)
   return i2cFileDesc;
 }
 
-void I2c_closeI2cDevice(int32_t i2cFileDesc) { close(i2cFileDesc); }
-
 static void setI2cBusPinsToI2cMode(int32_t busNum)
 {
   const int32_t NUM_I2C_BUS_PINS = 2;
@@ -68,24 +66,6 @@ static void setI2cBusPinsToI2cMode(int32_t busNum)
 
   setI2cBusPinToI2cMode(p9DataPinStr);
   setI2cBusPinToI2cMode(p9ClockPinStr);
-}
-
-// Get data and clock pins for the bus number on the P9 header
-static void getP9DataAndClockPinsForI2cBusNum(int32_t busNum,
-                                              int32_t *pPinNumsOut)
-{
-  switch (busNum) {
-  case 1:
-    pPinNumsOut[0] = 18;
-    pPinNumsOut[1] = 17;
-    break;
-  case 2:
-    pPinNumsOut[0] = 20;
-    pPinNumsOut[1] = 19;
-    break;
-  default:
-    assert(0);
-  }
 }
 
 // Get bus name string from bus number like "/dev/i2c-1"
@@ -108,30 +88,24 @@ static int32_t setI2CDeviceToSlaveAddress(const char *pBusName,
   return i2cFileDesc;
 }
 
-void I2c_writeI2cReg(int32_t i2cFileDesc, unsigned char regAddr,
-                     unsigned char value)
+void I2c_closeI2cDevice(int32_t i2cFileDesc) { close(i2cFileDesc); }
+
+// Get data and clock pins for the bus number on the P9 header
+static void getP9DataAndClockPinsForI2cBusNum(int32_t busNum,
+                                              int32_t *pPinNumsOut)
 {
-  unsigned char buff[2];
-  buff[0] = regAddr;
-  buff[1] = value;
-
-  int32_t bytesWritten = write(i2cFileDesc, buff, 2);
-
-  // Failed to write 2 bytes
-  if (bytesWritten != 2) {
-    perror("I2C: Unable to write i2c register.");
-    exit(1);
+  switch (busNum) {
+  case 1:
+    pPinNumsOut[0] = 18;
+    pPinNumsOut[1] = 17;
+    break;
+  case 2:
+    pPinNumsOut[0] = 20;
+    pPinNumsOut[1] = 19;
+    break;
+  default:
+    assert(0);
   }
-}
-
-void I2c_readI2cReg(int32_t i2cFileDesc, unsigned char regAddr,
-                    unsigned char *pBufferOut, int32_t numBytesToRead)
-{
-  // To read a register, must first write the address to the I2C bus
-  writeRegAddrToI2cBus(i2cFileDesc, regAddr);
-
-  // Read numBytesToRead bytes into pBufferOut
-  readBytesFromRegAddr(i2cFileDesc, pBufferOut, numBytesToRead);
 }
 
 static void setI2cBusPinToI2cMode(const char *p9DataPinStr)
@@ -147,7 +121,33 @@ static void setI2cBusPinToI2cMode(const char *p9DataPinStr)
   }
 }
 
-static void writeRegAddrToI2cBus(int32_t i2cFileDesc, unsigned char regAddr)
+void I2c_writeI2cReg(int32_t i2cFileDesc, uint8_t regAddr,
+                     uint8_t value)
+{
+  uint8_t buff[2];
+  buff[0] = regAddr;
+  buff[1] = value;
+
+  int32_t bytesWritten = write(i2cFileDesc, buff, 2);
+
+  // Failed to write 2 bytes
+  if (bytesWritten != 2) {
+    perror("I2C: Unable to write i2c register.");
+    exit(1);
+  }
+}
+
+void I2c_readI2cReg(int32_t i2cFileDesc, uint8_t regAddr,
+                    uint8_t *pBufferOut, int32_t numBytesToRead)
+{
+  // To read a register, must first write the address to the I2C bus
+  writeRegAddrToI2cBus(i2cFileDesc, regAddr);
+
+  // Read numBytesToRead bytes into pBufferOut
+  readBytesFromRegAddr(i2cFileDesc, pBufferOut, numBytesToRead);
+}
+
+static void writeRegAddrToI2cBus(int32_t i2cFileDesc, uint8_t regAddr)
 {
   int32_t bytesWritten = write(i2cFileDesc, &regAddr, sizeof(regAddr));
 
@@ -159,10 +159,10 @@ static void writeRegAddrToI2cBus(int32_t i2cFileDesc, unsigned char regAddr)
 }
 
 static void readBytesFromRegAddr(int32_t i2cFileDesc,
-                                 unsigned char *pValueOutput,
+                                 uint8_t *pValueOut,
                                  int32_t sizeofValueOutput)
 {
-  int32_t bytesRead = read(i2cFileDesc, pValueOutput, sizeofValueOutput);
+  int32_t bytesRead = read(i2cFileDesc, pValueOut, sizeofValueOutput);
 
   // If failed to read from I2C register, terminate program
   if (bytesRead != sizeofValueOutput) {
