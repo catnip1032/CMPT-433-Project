@@ -134,19 +134,20 @@ static void Test_testClassifierModule(void)
   printf("\nInitializing classifier module...\n");
   ClassifierModule_init(2);
 
-  printf("\nWaiting for ball to appear...\n");
-  ClassifierModule_waitUntilBallAppears();
+  printf("\nWaiting for recycling item to appear...\n");
+  ClassifierModule_waitUntilRecyclingItemAppears();
 
-  eClassifierModule_BallColor ballColor = ClassifierModule_getBallColor();
-  printf("Ball has appeared! Color is: ");
-  if (ballColor == CLASSIFIER_MODULE_RED_BALL) {
-    printf("Color: Red\n");
+  eClassifierModule_RecyclingType recyclingType =
+      ClassifierModule_getRecyclingType();
+  printf("Recycling has appeared! it is: ");
+  if (recyclingType == CLASSIFIER_MODULE_GARBAGE) {
+    printf("Garbage :(\n");
   }
-  else if (ballColor == CLASSIFIER_MODULE_GREEN_BALL) {
-    printf("Color: Green\n");
+  else if (recyclingType == CLASSIFIER_MODULE_COMPOST) {
+    printf("Compost :)\n");
   }
   else {
-    printf("Color: Blue\n");
+    printf("Recycling :)\n");
   }
 
   ClassifierModule_cleanup();

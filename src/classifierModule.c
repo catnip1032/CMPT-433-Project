@@ -1,5 +1,5 @@
-/* The classifier module is responsible for classifying the color of ball
- * that is currently waiting on the ramp, so that the ball can subsequently be
+/* The classifier module is responsible for classifying the type of recycling
+ * that is currently waiting on the ramp, so that it can subsequently be
  * placed within the correct bin. */
 
 #include "../include/classifierModule.h"
@@ -7,7 +7,7 @@
 #include "../include/timing.h"
 #include <stdint.h>
 
-static const uint32_t WAIT_UNTIL_BALL_APPEARS_SLEEP_INTERVAL_NS =
+static const uint32_t WAIT_UNTIL_RECYCLING_APPEARS_SLEEP_INTERVAL_NS =
     250000000; // 0.25 sec
 
 void ClassifierModule_init(uint32_t _colorSensorI2cBusNumber)
@@ -20,30 +20,30 @@ void ClassifierModule_cleanup(void)
   ColorSensor_cleanup();
 }
 
-// Blocking function that returns once the ball is infront of the color sensor
+// Blocking function that returns once the recycling is infront of the sensor
 // on the ramp.
-void ClassifierModule_waitUntilBallAppears(void)
+void ClassifierModule_waitUntilRecyclingItemAppears(void)
 {
-  bool hasBallAppeared;
+  bool hasRecyclingAppeared;
   do {
-    hasBallAppeared = ColorSensor_isObjectInFrontOfSensor();
-    Timing_nanoSleep(0, WAIT_UNTIL_BALL_APPEARS_SLEEP_INTERVAL_NS);
-  } while (!hasBallAppeared);
+    hasRecyclingAppeared = ColorSensor_isObjectInFrontOfSensor();
+    Timing_nanoSleep(0, WAIT_UNTIL_RECYCLING_APPEARS_SLEEP_INTERVAL_NS);
+  } while (!hasRecyclingAppeared);
 }
 
-// Returns the current color of the next ball waiting on the ramp.
-eClassifierModule_BallColor ClassifierModule_getBallColor(void)
+// Returns the current color of the next recycling item waiting on the ramp.
+eClassifierModule_RecyclingType ClassifierModule_getRecyclingType(void)
 {
-  eColorSensorColor ballColor = ColorSensor_getColor();
+  eColorSensorColor recyclingColor = ColorSensor_getColor();
 
-  switch (ballColor) {
+  switch (recyclingColor) {
   case COLOR_SENSOR_RED:
-    return CLASSIFIER_MODULE_RED_BALL;
+    return CLASSIFIER_MODULE_GARBAGE;
   case COLOR_SENSOR_GREEN:
-    return CLASSIFIER_MODULE_GREEN_BALL;
+    return CLASSIFIER_MODULE_COMPOST;
   case COLOR_SENSOR_BLUE:
-    return CLASSIFIER_MODULE_BLUE_BALL;
+    return CLASSIFIER_MODULE_RECYCLING;
   default:
-    return CLASSIFIER_MODULE_RED_BALL;
+    return CLASSIFIER_MODULE_GARBAGE;
   }
 }
