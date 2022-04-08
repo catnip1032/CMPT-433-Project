@@ -64,9 +64,9 @@ static int32_t OBJECT_IN_FRONT_THRESHOLD = 200;
 const size_t MAX_CALIBRATION_READINGS = 10;
 
 // Interval between calibration reads
-const int32_t CALIBRATION_READ_INTERVAL_NS = 250000000; // 0.25 seconds
+const uint32_t CALIBRATION_READ_INTERVAL_NS = 250000000; // 0.25 seconds
 
-void ColorSensor_init(int32_t _i2cBusNum)
+void ColorSensor_init(uint32_t _i2cBusNum)
 {
   m_i2cFileBusDescriptor =
       I2c_initI2cDevice(_i2cBusNum, COLOR_SENSOR_DEVICE_ADDRESS);

@@ -1,3 +1,4 @@
+#include "../include/classifierModule.h"
 #include "../include/colorSensor.h"
 #include "../include/timing.h"
 #include <assert.h>
@@ -16,8 +17,11 @@ typedef struct {
 #define TEST_EXAMPLE "testExample"
 static void Test_testExample(void);
 
-#define COLOR_SENSOR_TEST "testColorSensor"
+#define TEST_COLOR_SENSOR "testColorSensor"
 static void Test_testColorSensor(void);
+
+#define TEST_CLASSIFIER_MODULE "testClassifierModule"
+static void Test_testClassifierModule(void);
 
 // Do not modify this one. This will help the program determine that the end
 // of tests has been reached.
@@ -43,7 +47,8 @@ int main(int argc, char *argv[])
    * statements, asserts, and exits with error in the test functions.
    */
   test_t tests[] = {{TEST_EXAMPLE, &Test_testExample},
-                    {COLOR_SENSOR_TEST, &Test_testColorSensor},
+                    {TEST_COLOR_SENSOR, &Test_testColorSensor},
+                    {TEST_CLASSIFIER_MODULE, &Test_testClassifierModule},
                     end_of_tests};
 
   printf("Tests have started\n");
@@ -87,6 +92,7 @@ static void Test_testColorSensor(void)
   static const int32_t NUM_COLOR_SENSOR_TEST_READS = 30;
   static const int64_t COLOR_READ_TIME_INTERVAL_NS = 750000000;
 
+  printf("\nInitializing color sensor...\n");
   ColorSensor_init(2);
   for (int32_t i = 0; i < NUM_COLOR_SENSOR_TEST_READS; ++i) {
     int luminanceValues[5];
@@ -119,4 +125,29 @@ static void Test_testColorSensor(void)
     printf("\n");
     Timing_nanoSleep(0, COLOR_READ_TIME_INTERVAL_NS);
   }
+
+  ColorSensor_cleanup();
+}
+
+static void Test_testClassifierModule(void)
+{
+  printf("\nInitializing classifier module...\n");
+  ClassifierModule_init(2);
+
+  printf("\nWaiting for ball to appear...\n");
+  ClassifierModule_waitUntilBallAppears();
+
+  eClassifierModule_BallColor ballColor = ClassifierModule_getBallColor();
+  printf("Ball has appeared! Color is: ");
+  if (ballColor == CLASSIFIER_MODULE_RED_BALL) {
+    printf("Color: Red\n");
+  }
+  else if (ballColor == CLASSIFIER_MODULE_GREEN_BALL) {
+    printf("Color: Green\n");
+  }
+  else {
+    printf("Color: Blue\n");
+  }
+
+  ClassifierModule_cleanup();
 }

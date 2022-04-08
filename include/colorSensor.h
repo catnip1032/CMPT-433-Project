@@ -17,7 +17,7 @@ typedef enum {
 
 // i2cBusNum is the i2c bus number that the color sensor is attached to
 // function blocks temporarily due to initial calibration
-void ColorSensor_init(int32_t _i2cBusNum);
+void ColorSensor_init(uint32_t _i2cBusNum);
 void ColorSensor_cleanup(void);
 
 /* Output buffer must be 5 int32_t's in size. The first element will contain
@@ -37,7 +37,8 @@ void ColorSensor_recalibrate(void);
 
 /* Returns true if an object is right in front of the sensor. Otherwise,
  * returns false if no object is in front of the color sensor. The object
- * should be right in front of the light */
+ * should be right in front of the light. NOTE: ColorSensor_recalibrate()
+ * should be called at least once before calling this function */
 bool ColorSensor_isObjectInFrontOfSensor(void);
 
 // return the color that the sensor is picking up
