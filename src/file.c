@@ -3,15 +3,14 @@
  * use.
  */
 
+#include "../include/file.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int *File_concatFilePath(const char *_pFilePathBegin,
+int File_concatFilePath(const char *_pFilePathBegin,
 const char *_pFilePathEnd, char *_pConcatFilePath,
 const int concatFilePathSize)
 {
-  char *concatFilePath = malloc(sizeof(char)*concatFilePathSize);
-
 	int charsPrinted = snprintf(_pConcatFilePath, sizeof(char)*concatFilePathSize, 
 	"%s%s", _pFilePathBegin, _pFilePathEnd);
   if(charsPrinted <=0){
@@ -20,10 +19,10 @@ const int concatFilePathSize)
     exit(EXIT_FAILURE);    
   }
   
-  return 1;
+  return 0;
 }
 
-int *File_readFromFile(const char *_pFilePath, char *_readBuffer, 
+int File_readFromFile(const char *_pFilePath, char *_readBuffer, 
 const int _readBufferSize)
 {
   FILE *pFile = fopen(_pFilePath, "r");
@@ -35,7 +34,7 @@ const int _readBufferSize)
   fgets(_readBuffer, _readBufferSize, pFile);
   fclose(pFile);
 
-  return 1;
+  return 0;
 }
 
 int File_writeToFile(const char *_pFilePath, const char *_pValue) 
@@ -55,5 +54,5 @@ int File_writeToFile(const char *_pFilePath, const char *_pValue)
 
   fclose(pFile);
 
-  return 1;
+  return 0;
 }

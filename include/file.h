@@ -18,26 +18,19 @@
 #define FILE_UNEXPORT_FILE "/unexport"
 #define FILE_VALUE_FILE "/value"
 
-// PWM pin manipulation file and folder MACROs
-// TODO: make these constant in the PWM API
-#define FILE_PWM_PATH "/sys/class/pwm"
-#define FILE_PERIOD_FILE "/period"
-#define FILE_DUTY_CYCLE_FILE "/duty_cycle"
-#define FILE_ENABLE_FILE "/enable"
-
 // Concatenates a two files paths together and stores the result in the in-out
-// parameter _pConcatFilePath. Returns a 1 if successful.
-char *File_concatFilePath(const char *_pFilePathBegin,
+// parameter _pConcatFilePath. Returns a 0 if successful.
+int File_concatFilePath(const char *_pFilePathBegin,
 const char *_pFilePathEnd, char *_pConcatFilePath,
 const int concatFilePathSize);
 
 // Reads from file indicated at pFileName into the passed read buffer of read 
-// buffer size. Returns 1 if successful.
-int *File_readFromFile(const char *_pFilePath, char *_readBuffer,
+// buffer size. Returns 0 if successful.
+int File_readFromFile(const char *_pFilePath, char *_readBuffer,
 const int _readBufferSize);
 
 // Writes the value at pValue to the file indicated at pFilePath.
-// Returns 1 if successful.
+// Returns 0 if successful.
 int File_writeToFile(const char *_pFilePath, const char *_pValue);
 
 #endif
