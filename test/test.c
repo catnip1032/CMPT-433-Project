@@ -111,6 +111,11 @@ static void Test_testColorSensor(void)
     else {
       printf("Color: Blue\n");
     }
+
+    bool isObjectInFrontOfColorSensor = ColorSensor_isObjectInFrontOfSensor();
+    printf("Is an object in front of the color sensor: %s\n",
+           isObjectInFrontOfColorSensor ? "True" : "False");
+
     printf("\n");
     Timing_nanoSleep(0, COLOR_READ_TIME_INTERVAL_NS);
   }

@@ -4,6 +4,7 @@
  * is provided by the client code, and the address of the
  * color sensor is hard-coded by the manufacturer. */
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #ifndef COLORSENSOR_GAURD
@@ -15,6 +16,7 @@ typedef enum {
 } eColorSensorColor;
 
 // i2cBusNum is the i2c bus number that the color sensor is attached to
+// function blocks temporarily due to initial calibration
 void ColorSensor_init(int32_t _i2cBusNum);
 void ColorSensor_cleanup(void);
 
@@ -27,6 +29,17 @@ void ColorSensor_getLuminanceValuesInLux(int32_t *_pLuminanceValsOut);
  * the red value, second green, third blue. Values are in the range [0,255]. */
 void ColorSensor_getRgbValues(int32_t *_pRgbValuesOut);
 
+/* Recalibrate the color sensor for object detection in the current lighting
+ * This should be called before using isObjectInFrontOfSensor for the
+ * first time, and everytime the light changes in the surrounding environment.
+ * Blocks temporarily */
+void ColorSensor_recalibrate(void);
+
+/* Returns true if an object is right in front of the sensor. Otherwise,
+ * returns false if no object is in front of the color sensor. The object
+ * should be right in front of the light */
+bool ColorSensor_isObjectInFrontOfSensor(void);
+
 // return the color that the sensor is picking up
-eColorSensorColor ColorSensor_getColor();
+eColorSensorColor ColorSensor_getColor(void);
 #endif
