@@ -1,4 +1,4 @@
-/* The classifier module is responsible for classifying the type of recycling
+/* The classifier module is responsible for classifying the type of refuse
  * that is currently waiting on the ramp, so that it can subsequently be
  * placed within the correct bin. */
 
@@ -7,7 +7,7 @@
 #include "../include/timing.h"
 #include <stdint.h>
 
-static const uint32_t WAIT_UNTIL_RECYCLING_APPEARS_SLEEP_INTERVAL_NS =
+static const uint32_t WAIT_UNTIL_REFUSE_ITEM_APPEARS_SLEEP_INTERVAL_NS =
     250000000; // 0.25 sec
 
 void ClassifierModule_init(uint32_t _colorSensorI2cBusNumber)
@@ -20,23 +20,23 @@ void ClassifierModule_cleanup(void)
   ColorSensor_cleanup();
 }
 
-// Blocking function that returns once the recycling is infront of the sensor
+// Blocking function that returns once the refuse is infront of the sensor
 // on the ramp.
-void ClassifierModule_waitUntilRecyclingItemAppears(void)
+void ClassifierModule_waitUntilRefuseItemAppears(void)
 {
-  bool hasRecyclingAppeared;
+  bool hasRefuseAppeared;
   do {
-    hasRecyclingAppeared = ColorSensor_isObjectInFrontOfSensor();
-    Timing_nanoSleep(0, WAIT_UNTIL_RECYCLING_APPEARS_SLEEP_INTERVAL_NS);
-  } while (!hasRecyclingAppeared);
+    hasRefuseAppeared = ColorSensor_isObjectInFrontOfSensor();
+    Timing_nanoSleep(0, WAIT_UNTIL_REFUSE_ITEM_APPEARS_SLEEP_INTERVAL_NS);
+  } while (!hasRefuseAppeared);
 }
 
-// Returns the current color of the next recycling item waiting on the ramp.
-eClassifierModule_RecyclingType ClassifierModule_getRecyclingType(void)
+// Returns the current color of the next refuse item waiting on the ramp.
+eClassifierModule_RefuseItemType ClassifierModule_getRefuseItemType(void)
 {
-  eColorSensorColor recyclingColor = ColorSensor_getColor();
+  eColorSensorColor refuseColor = ColorSensor_getColor();
 
-  switch (recyclingColor) {
+  switch (refuseColor) {
   case COLOR_SENSOR_RED:
     return CLASSIFIER_MODULE_GARBAGE;
   case COLOR_SENSOR_GREEN:

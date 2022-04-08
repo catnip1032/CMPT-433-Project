@@ -134,16 +134,16 @@ static void Test_testClassifierModule(void)
   printf("\nInitializing classifier module...\n");
   ClassifierModule_init(2);
 
-  printf("\nWaiting for recycling item to appear...\n");
-  ClassifierModule_waitUntilRecyclingItemAppears();
+  printf("\nWaiting for refuse item to appear...\n");
+  ClassifierModule_waitUntilRefuseItemAppears();
 
-  eClassifierModule_RecyclingType recyclingType =
-      ClassifierModule_getRecyclingType();
-  printf("Recycling has appeared! it is: ");
-  if (recyclingType == CLASSIFIER_MODULE_GARBAGE) {
+  eClassifierModule_RefuseItemType refuseType =
+      ClassifierModule_getRefuseItemType();
+  printf("A refuse item has appeared! it is: ");
+  if (refuseType == CLASSIFIER_MODULE_GARBAGE) {
     printf("Garbage :(\n");
   }
-  else if (recyclingType == CLASSIFIER_MODULE_COMPOST) {
+  else if (refuseType == CLASSIFIER_MODULE_COMPOST) {
     printf("Compost :)\n");
   }
   else {
