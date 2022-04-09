@@ -50,7 +50,7 @@ installed prior to running this script."
   if [ $? -ne 0 ]
   then
     TARGET_IP="192.168.6.2"
-    verify_ssh_connection ${TARGET} ${SSH_PORT}
+    verify_ssh_connection ${TARGET_IP} ${SSH_PORT}
     if [ $? -ne 0 ]
     then
       >&2 echo "It was not possible to contact target through SSH. Is the \
@@ -86,7 +86,7 @@ EOM
 	if [ ! -f ${TARGET_BIN} ]
 	then
 		echo "Binary not found in target. Is the target NFS working and mounted to
-		/mnt/remote?"
+		${TARGET_CMPT433_PUBLIC}?"
 		exit 1
 	fi
 
@@ -96,6 +96,7 @@ EOM
 	echo "Setting recycler service."
 	echo ${PASSWORD} | sudo -S sh -c 'echo "${RECYCLER_SERVICE}" > ${TARGET_SYSTEMD_DIR}/${APPNAME}.service'
 	echo ${PASSWORD} | sudo -S systemctl enable --now ${APPNAME}.service
+  echo ""
 
 	if [ $? -eq 0 ]
 	then
