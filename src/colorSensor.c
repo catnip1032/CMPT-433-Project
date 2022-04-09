@@ -1,6 +1,8 @@
 #include "../include/colorSensor.h"
 #include "../include/i2c.h"
 #include "../include/timing.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 // Adapted from
 // http://www.beaglebone.net/code/c/beaglebone-and-tcs34725-color-sensor-example-in-c.php
@@ -48,9 +50,23 @@ static void ColorSensor_RGBValsToAmbientLightLuminanceValue(
 
 // Static Variables
 // ----------------------------------------------------------------------------
+
+// File descriptor to use color sensor I2C device
 static int32_t m_i2cFileBusDescriptor;
 
-void ColorSensor_init(int32_t _i2cBusNum)
+// Baseline for detecting if no object is in front of the sensor
+static int32_t m_baselineLuminance;
+
+// Distance away from baseline to detect if object is in front
+static int32_t OBJECT_IN_FRONT_THRESHOLD = 200;
+
+// Number of readings to take for calibration
+const size_t MAX_CALIBRATION_READINGS = 10;
+
+// Interval between calibration reads
+const uint64_t CALIBRATION_READ_INTERVAL_NS = 250000000; // 0.25 seconds
+
+void ColorSensor_init(uint32_t _i2cBusNum)
 {
   m_i2cFileBusDescriptor =
       I2c_initI2cDevice(_i2cBusNum, COLOR_SENSOR_DEVICE_ADDRESS);
@@ -63,7 +79,25 @@ void ColorSensor_init(int32_t _i2cBusNum)
   I2c_writeI2cReg(m_i2cFileBusDescriptor, SELECT_CONTROL_REGISTER_ADDRESS,
                   AGAIN_1_TIME);
 
+  // Calibrate the color sensor based on its current environment
+  ColorSensor_recalibrate();
+
   Timing_nanoSleep(1, 0);
+}
+
+void ColorSensor_recalibrate(void)
+{
+  int32_t readingsSum = 0;
+  for (int i = 0; i < MAX_CALIBRATION_READINGS; ++i) {
+    int32_t luminanceValuesOut[LUMINANCE_OUTPUT_ARRAY_SIZE];
+    ColorSensor_getLuminanceValuesInLux(luminanceValuesOut);
+
+    readingsSum += luminanceValuesOut[AMBIENT_LIGHT_LUMINANCE_OUT_INDEX];
+
+    Timing_nanoSleep(0, CALIBRATION_READ_INTERVAL_NS);
+  }
+
+  m_baselineLuminance = readingsSum / MAX_CALIBRATION_READINGS;
 }
 
 void ColorSensor_cleanup(void)
@@ -107,7 +141,17 @@ static double ColorSensor_getMaxValue(double _val1, double _val2)
   return _val1 > _val2 ? _val1 : _val2;
 }
 
-eColorSensorColor ColorSensor_getColor()
+bool ColorSensor_isObjectInFrontOfSensor(void)
+{
+  int32_t luminanceValuesOut[LUMINANCE_OUTPUT_ARRAY_SIZE];
+  ColorSensor_getLuminanceValuesInLux(luminanceValuesOut);
+
+  return abs(m_baselineLuminance -
+             luminanceValuesOut[AMBIENT_LIGHT_LUMINANCE_OUT_INDEX]) >=
+         OBJECT_IN_FRONT_THRESHOLD;
+}
+
+eColorSensorColor ColorSensor_getColor(void)
 {
   int32_t luminanceValuesOut[LUMINANCE_OUTPUT_ARRAY_SIZE];
   ColorSensor_getLuminanceValuesInLux(luminanceValuesOut);
