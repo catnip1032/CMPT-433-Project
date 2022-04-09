@@ -7,8 +7,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#ifndef COLORSENSOR_GAURD
-#define COLORSENSOR_GAURD
+#ifndef _COLORSENSOR_GUARD_H_
+#define _COLORSENSOR_GUARD_H_
 typedef enum {
   COLOR_SENSOR_RED,
   COLOR_SENSOR_GREEN,
@@ -21,7 +21,7 @@ void ColorSensor_init(uint32_t _i2cBusNum);
 void ColorSensor_cleanup(void);
 
 /* Output buffer must be 5 int32_t's in size. The first element will contain
- * the red luminance, second green, third blue, fourth ir luminance, and the
+ * the red luminance, second green, third blue, fourth is luminance, and the
  * fifth element will be the ambient light luminance in Lux units */
 void ColorSensor_getLuminanceValuesInLux(int32_t *_pLuminanceValsOut);
 

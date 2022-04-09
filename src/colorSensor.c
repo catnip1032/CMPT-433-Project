@@ -55,7 +55,7 @@ static void ColorSensor_RGBValsToAmbientLightLuminanceValue(
 static int32_t m_i2cFileBusDescriptor;
 
 // Baseline for detecting if no object is in front of the sensor
-static int32_t m_noObjectInFrontAmbientLight;
+static int32_t m_baselineLuminance;
 
 // Distance away from baseline to detect if object is in front
 static int32_t OBJECT_IN_FRONT_THRESHOLD = 200;
@@ -64,7 +64,7 @@ static int32_t OBJECT_IN_FRONT_THRESHOLD = 200;
 const size_t MAX_CALIBRATION_READINGS = 10;
 
 // Interval between calibration reads
-const uint32_t CALIBRATION_READ_INTERVAL_NS = 250000000; // 0.25 seconds
+const uint64_t CALIBRATION_READ_INTERVAL_NS = 250000000; // 0.25 seconds
 
 void ColorSensor_init(uint32_t _i2cBusNum)
 {
@@ -97,7 +97,7 @@ void ColorSensor_recalibrate(void)
     Timing_nanoSleep(0, CALIBRATION_READ_INTERVAL_NS);
   }
 
-  m_noObjectInFrontAmbientLight = readingsSum / MAX_CALIBRATION_READINGS;
+  m_baselineLuminance = readingsSum / MAX_CALIBRATION_READINGS;
 }
 
 void ColorSensor_cleanup(void)
@@ -146,7 +146,7 @@ bool ColorSensor_isObjectInFrontOfSensor(void)
   int32_t luminanceValuesOut[LUMINANCE_OUTPUT_ARRAY_SIZE];
   ColorSensor_getLuminanceValuesInLux(luminanceValuesOut);
 
-  return abs(m_noObjectInFrontAmbientLight -
+  return abs(m_baselineLuminance -
              luminanceValuesOut[AMBIENT_LIGHT_LUMINANCE_OUT_INDEX]) >=
          OBJECT_IN_FRONT_THRESHOLD;
 }

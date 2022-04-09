@@ -20,7 +20,7 @@ void ClassifierModule_cleanup(void)
   ColorSensor_cleanup();
 }
 
-// Blocking function that returns once the refuse is infront of the sensor
+// Blocking function that returns once the refuse is in front of the sensor
 // on the ramp.
 void ClassifierModule_waitUntilRefuseItemAppears(void)
 {

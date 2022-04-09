@@ -4,8 +4,8 @@
 
 #include <stdint.h>
 
-#ifndef CLASSIFIER_MODULE_GAURD
-#define CLASSIFIER_MODULE_GAURD
+#ifndef _CLASSIFIER_MODULE_GUARD_H_
+#define _CLASSIFIER_MODULE_GUARD_H_
 
 typedef enum {
   CLASSIFIER_MODULE_GARBAGE,
@@ -17,7 +17,7 @@ void ClassifierModule_init(uint32_t _colorSensorI2cBusNumber);
 void ClassifierModule_cleanup(void);
 
 // Blocking function that returns once the refuse item is
-// infront of the sensor on the ramp.
+// in front of the sensor on the ramp.
 void ClassifierModule_waitUntilRefuseItemAppears(void);
 
 // Returns the refuse type of the next refuse item waiting on the ramp.
