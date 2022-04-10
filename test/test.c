@@ -1,5 +1,6 @@
 #include "../include/classifierModule.h"
 #include "../include/colorSensor.h"
+#include "../include/led.h"
 #include "../include/timing.h"
 #include <assert.h>
 #include <stdbool.h>
@@ -22,6 +23,9 @@ static void Test_testColorSensor(void);
 
 #define TEST_CLASSIFIER_MODULE "testClassifierModule"
 static void Test_testClassifierModule(void);
+
+#define TEST_LED "testLed"
+static void Test_testLed(void);
 
 // Do not modify this one. This will help the program determine that the end
 // of tests has been reached.
@@ -49,6 +53,7 @@ int main(int argc, char *argv[])
   test_t tests[] = {{TEST_EXAMPLE, &Test_testExample},
                     {TEST_COLOR_SENSOR, &Test_testColorSensor},
                     {TEST_CLASSIFIER_MODULE, &Test_testClassifierModule},
+                    {TEST_LED, &Test_testLed},
                     end_of_tests};
 
   printf("Tests have started\n");
@@ -151,4 +156,53 @@ static void Test_testClassifierModule(void)
   }
 
   ClassifierModule_cleanup();
+}
+
+static void Test_testLed(void)
+{
+  printf("Initializing LED API.\n");
+  Led_init();
+
+  // Initializing LED 0
+  Led_initLed(LED_0);
+  Led_initLed(LED_1);
+  Led_initLed(LED_2);
+  Led_initLed(LED_3);
+
+  for (uint8_t i = 0; i < NUMS_OF_LEDS; i++) {
+    Led_setLight(i, false);
+  }
+
+  for (uint8_t i = 0; i < 5; i++) {
+    for (uint8_t j = 0; j < NUMS_OF_LEDS; j++) {
+      Led_setLight(j, true);
+      Timing_milliSleep(0, 300);
+      Led_setLight(j, false);
+    }
+  }
+
+  for (uint8_t i = 0; i < 5; i++) {
+    for (int8_t j = NUMS_OF_LEDS - 1; j >= 0; j--) {
+      Led_setLight(j, true);
+      Timing_milliSleep(0, 300);
+      Led_setLight(j, false);
+    }
+  }
+
+  for (uint8_t i = 0; i < 4; i++) {
+    for (uint8_t j = 0; j < NUMS_OF_LEDS; j++) {
+      Led_setLight(j, true);
+    }
+
+    Timing_milliSleep(0, 500);
+
+    for (uint8_t j = 0; j < NUMS_OF_LEDS; j++) {
+      Led_setLight(j, false);
+    }
+
+    Timing_milliSleep(0, 500);
+  }
+
+  printf("Terminating LED API.\n");
+  Led_cleanup();
 }
