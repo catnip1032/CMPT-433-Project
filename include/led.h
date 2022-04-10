@@ -5,6 +5,7 @@
 
 // Type definitions
 // ----------------------------------------------------------------------------
+#define NUMS_OF_LEDS 4
 typedef enum { LED_0 = 0, LED_1 = 1, LED_2 = 2, LED_3 = 3 } eLedNum;
 
 // Initialization/Termination functions
@@ -27,8 +28,8 @@ void Led_termLed(eLedNum _ledNum);
 // ----------------------------------------------------------------------------
 // Sets/get the led on (true) or off (false). Led must be initialized before
 // calling Led_set() on it.
-void Led_set(bool _value);
-bool Led_get(eLedNum _ledNum);
+void Led_setLight(eLedNum _ledNum, bool _value);
+bool Led_getLight(eLedNum _ledNum);
 
 bool Led_isInitialized(eLedNum _ledNum);
 
