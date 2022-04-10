@@ -12,6 +12,9 @@
 #   * that the target password is temppwd, and
 # 	* that the binary "recycler" is compiled and can be found in 
 #   	~/cmpt433/public/myApps/recycler in the host.
+# 
+# Arguments:
+#   1. The target IP address
 
 # $1: Target IP
 # $2: Target port
@@ -21,6 +24,8 @@ verify_ssh_connection () {
 }
 
 main () {
+  TARGET_IP_ARG=$1
+
   APPNAME="recycler"
   CMPT433_DIR="${HOME}/cmpt433"
   BIN=$"${CMPT433_DIR}/public/myApps/${APPNAME}"
@@ -45,6 +50,20 @@ installed prior to running this script."
   TARGET_USERNAME="debian"
   TARGET_IP="192.168.7.2"
   SSH_PORT="22"
+
+  if [ -z "${TARGET_IP_ARG}" ]
+  then
+    OLD_TARGET_IP=${TARGET_IP}
+    TARGET_IP=${TARGET_IP_ARG}
+    verify_ssh_connection ${TARGET_IP} ${SSH_PORT}
+    if [ $? -ne 0 ]
+    then
+      >&2 echo "It was not possible to contact target through SSH. Ensure the \
+IP address ${TARGET_IP} is the correct address and that the target is \
+connected to the host."
+      exit 1
+    fi
+  fi
 
   verify_ssh_connection ${TARGET_IP} ${SSH_PORT}
   if [ $? -ne 0 ]
