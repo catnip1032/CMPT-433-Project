@@ -25,6 +25,13 @@
 #define FILE_DUTY_CYCLE_FILE "/duty_cycle"
 #define FILE_ENABLE_FILE "/enable"
 
+// LED manipulation files
+#define FILE_LED_BASEPATH "/sys/class/leds"
+#define FILE_LED_PATH FILE_LED_BASEPATH "/beaglebone:green:usr"
+#define FILE_LED_TRIGGER "/trigger"
+#define FILE_LED_BRIGHTNESS "/brightness"
+#define FILE_LED_MAX_BRIGHTNESS "/max_brightness"
+
 // Concatenates a two files paths together and stores the result in the in-out
 // parameter _pConcatFilePath. Returns a 1 if successful.
 int File_concatFilePath(const char *_pFilePathBegin, const char *_pFilePathEnd,
