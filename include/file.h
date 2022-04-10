@@ -5,8 +5,8 @@
  * that may interact with the BBG's GPIO and PWM via the Linux filesystem.
  */
 
-#ifndef FILE_GAURD
-#define FILE_GAURD
+#ifndef _FILE_GAURD_H
+#define _FILE_GAURD_H
 
 // GPIO pin manipulation file and folder MACROs
 // TODO: make these constant in the GPIO API
