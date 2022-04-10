@@ -18,12 +18,12 @@ int File_concatFilePath(const char *_pFilePathBegin, const char *_pFilePathEnd,
            _pFilePathBegin, _pFilePathEnd);
     exit(EXIT_FAILURE);
   }
-  
-  return 0;
+
+  return 1;
 }
 
-int File_readFromFile(const char *_pFilePath, char *_readBuffer, 
-const int _readBufferSize)
+int File_readFromFile(const char *_pFilePath, char *_readBuffer,
+                      const int _readBufferSize)
 {
   FILE *pFile = fopen(_pFilePath, "r");
   if (pFile == NULL) {
@@ -34,7 +34,7 @@ const int _readBufferSize)
   fgets(_readBuffer, _readBufferSize, pFile);
   fclose(pFile);
 
-  return 0;
+  return 1;
 }
 
 int File_writeToFile(const char *_pFilePath, const char *_pValue)
@@ -54,5 +54,5 @@ int File_writeToFile(const char *_pFilePath, const char *_pValue)
 
   fclose(pFile);
 
-  return 0;
+  return 1;
 }
