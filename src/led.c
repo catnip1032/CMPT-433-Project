@@ -133,7 +133,6 @@ void Led_initLed(eLedNum _ledNum)
 
 void Led_termLed(eLedNum _ledNum)
 {
-  printf("Terminating led %d.\n", _ledNum);
   char filepathBuffer[STR_BUFFER_SIZE];
   sLedConfig *ledConfig = m_ledsConfig + _ledNum;
   ledConfig->isInitialized = false;
