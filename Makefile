@@ -11,16 +11,15 @@ TEST_DIR=$(CMPT433_DIR)/public/tests
 TARGET_DIR = $(CMPT433_DIR)/public/myApps
 
 ## C Compiler
-# Runs a script to determine the existing C compiler in the machine. This is
-# necessary because a group member (guess who?) uses an alternative compiler
-# out of unnecessary rebelliousness (:
-CC := $(shell \
-			if command -v arm-none-linux-gnueabihf-gcc &> /dev/null;\
-			then\
-					echo "arm-none-linux-gnueabihf-gcc";\
-			else\
-					echo "arm-linux-gnueabihf-gcc";\
-			fi)
+# Runs a script to determine the installed C compiler on the machine.
+# Some group members use arm-none-linux-gnueabihf-gcc as an alternative,
+# so this is necessary. If arm-none-linux-gnueabihf-gcc is not found,
+# arm-linux-gnueabihf-gcc will be used instead.
+ifeq (, $(shell arm-linux-gnueabihf-gcc --version &> /dev/null))
+	CC := arm-none-linux-gnueabihf-gcc
+else
+	CC := arm-linux-gnueabihf-gcc
+endif
 
 ## Compilation Flags
 LFLAGS = -lpthread

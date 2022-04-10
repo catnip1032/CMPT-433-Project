@@ -20,14 +20,13 @@
 
 // Concatenates a two files paths together and stores the result in the in-out
 // parameter _pConcatFilePath. Returns a 0 if successful.
-int File_concatFilePath(const char *_pFilePathBegin,
-const char *_pFilePathEnd, char *_pConcatFilePath,
-const int concatFilePathSize);
+int File_concatFilePath(const char *_pFilePathBegin, const char *_pFilePathEnd,
+                        char *_pConcatFilePath, const int concatFilePathSize);
 
-// Reads from file indicated at pFileName into the passed read buffer of read 
+// Reads from file indicated at pFileName into the passed read buffer of read
 // buffer size. Returns 0 if successful.
 int File_readFromFile(const char *_pFilePath, char *_readBuffer,
-const int _readBufferSize);
+                      const int _readBufferSize);
 
 // Writes the value at pValue to the file indicated at pFilePath.
 // Returns 0 if successful.
