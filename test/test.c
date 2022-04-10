@@ -3,8 +3,10 @@
 #include "../include/led.h"
 #include "../include/timing.h"
 #include <assert.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -158,8 +160,20 @@ static void Test_testClassifierModule(void)
   ClassifierModule_cleanup();
 }
 
+void Test_handleInterruptTestLed(int _signal)
+{
+  Led_cleanup();
+  exit(EXIT_SUCCESS);
+}
+
 static void Test_testLed(void)
 {
+  struct sigaction action;
+  struct sigaction oldAction;
+  memset(&action, 0, sizeof(action));
+  action.sa_handler = &Test_handleInterruptTestLed;
+  sigaction(SIGINT, &action, &oldAction);
+
   printf("Initializing LED API.\n");
   Led_init();
 

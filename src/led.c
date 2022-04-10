@@ -133,15 +133,22 @@ void Led_initLed(eLedNum _ledNum)
 
 void Led_termLed(eLedNum _ledNum)
 {
+  printf("Terminating led %d.\n", _ledNum);
   char filepathBuffer[STR_BUFFER_SIZE];
   sLedConfig *ledConfig = m_ledsConfig + _ledNum;
   ledConfig->isInitialized = false;
 
-  Led_makePath(filepathBuffer, STR_BUFFER_SIZE, _ledNum, FILE_LED_TRIGGER);
-  File_writeToFile(filepathBuffer, ledConfig->original_trigger);
-
   Led_makePath(filepathBuffer, STR_BUFFER_SIZE, _ledNum, FILE_LED_BRIGHTNESS);
-  File_writeToFile(filepathBuffer, ledConfig->original_brightness);
+  if (!File_writeToFile(filepathBuffer, ledConfig->original_brightness)) {
+    fprintf(stderr, "Error writing %s to %s.\n", ledConfig->original_trigger,
+            filepathBuffer);
+  }
+
+  Led_makePath(filepathBuffer, STR_BUFFER_SIZE, _ledNum, FILE_LED_TRIGGER);
+  if (!File_writeToFile(filepathBuffer, ledConfig->original_trigger)) {
+    fprintf(stderr, "Error writing %s to %s.\n", ledConfig->original_trigger,
+            filepathBuffer);
+  }
 }
 
 // Light functions
