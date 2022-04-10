@@ -51,7 +51,7 @@ installed prior to running this script."
   TARGET_IP="192.168.7.2"
   SSH_PORT="22"
 
-  if [ -z "${TARGET_IP_ARG}" ]
+  if [ -n "${TARGET_IP_ARG}" ]
   then
     OLD_TARGET_IP=${TARGET_IP}
     TARGET_IP=${TARGET_IP_ARG}
@@ -131,4 +131,4 @@ EOM
   sshpass -p ${PASSWORD} ssh -t ${TARGET_USERNAME}@${TARGET_IP} "${COMMANDS}"
 }
 
-main
+main $1
