@@ -86,11 +86,13 @@ static void Light_initializeMovingTail(sTailConfig *_tailConfig)
 
 static void Light_movingTailNextStepNoWrap(sTailConfig *_tailConfig)
 {
+  // If at rightmost led and moving to right
   if (_tailConfig->headNum == NUMS_OF_LEDS - 1 &&
       _tailConfig->currentDirection == LIGHT_RIGHT) {
     _tailConfig->currentDirection = LIGHT_LEFT;
     _tailConfig->tailVisible = false;
   }
+  // If at leftmost led and moving to left
   else if (_tailConfig->headNum == 0 &&
            _tailConfig->currentDirection == LIGHT_LEFT) {
     _tailConfig->currentDirection = LIGHT_RIGHT;
@@ -109,6 +111,10 @@ static void Light_movingTailNextStepNoWrap(sTailConfig *_tailConfig)
 static void Light_movingTailSetLeds(sTailConfig *_tailConfig)
 {
   for (uint8_t i = 0; i < NUMS_OF_LEDS; i++) {
+    /*  Turns on the led if either LED i corresponds to the head of the "moving
+        tail" or if it corresponds to the tail position and the tail is
+        visible.
+      */
     if (i == _tailConfig->headNum ||
         (i == _tailConfig->headNum - 1 &&
          _tailConfig->currentDirection == LIGHT_RIGHT &&
@@ -204,7 +210,7 @@ void Lights_cleanup(void)
 
 // Light stages functions
 // ----------------------------------------------------------------------------
-void Lights_idle(void)
+void Lights_setIdle(void)
 {
   if (m_currentMode != MOVING_TAIL_MODE) {
     Light_startMovingTail();
@@ -213,7 +219,7 @@ void Lights_idle(void)
   m_movingTailInterval = IDLE_INTERVAL_MS;
 }
 
-void Lights_recycling(void)
+void Lights_setRecycling(void)
 {
   if (m_currentMode != MOVING_TAIL_MODE) {
     Light_startMovingTail();
@@ -222,7 +228,7 @@ void Lights_recycling(void)
   m_movingTailInterval = RECYCLING_INTERVAL_MS;
 }
 
-void Lights_recycled(void)
+void Lights_setRecycled(void)
 {
   if (m_currentMode != BLINKING_MODE) {
     Light_startBlinking();
@@ -230,7 +236,7 @@ void Lights_recycled(void)
 
   m_blinkInterval = RECYCLED_BLINK_INTERVAL_MS;
 }
-void Lights_returning(void)
+void Lights_setReturning(void)
 {
   if (m_currentMode != BLINKING_MODE) {
     Light_startBlinking();
