@@ -8,14 +8,14 @@
 
 // Initializes the pipe by setting the position of the arm on the TowerPro 
 // SG-5010 to it's initial position.
-void Pipe_init();
+void Pipe_init(void);
 
 // Resets the pipe position by turning the arm attachment on the TowerPro 
 // SG-5010 clockwise until the arm reaches it's initial position.
-void Pipe_resetPipePosition();
+void Pipe_resetPipePosition(void);
 
 // Rotates the pipe position by turning the arm attachment on the TowerPro 
 // SG-5010 counterclockwise to it's most left position.
-void Pipe_rotatePipeToDropBall();
+void Pipe_rotatePipeToDropBall(void);
 
 #endif
