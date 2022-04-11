@@ -1,6 +1,7 @@
 #include "../include/classifierModule.h"
 #include "../include/colorSensor.h"
 #include "../include/led.h"
+#include "../include/lights.h"
 #include "../include/timing.h"
 #include <assert.h>
 #include <signal.h>
@@ -29,6 +30,9 @@ static void Test_testClassifierModule(void);
 #define TEST_LED "testLed"
 static void Test_testLed(void);
 
+#define TEST_LIGHTS "testLights"
+static void Test_testLights(void);
+
 // Do not modify this one. This will help the program determine that the end
 // of tests has been reached.
 #define END_OF_TESTS_STR "0_END_OF_TESTS"
@@ -56,6 +60,7 @@ int main(int argc, char *argv[])
                     {TEST_COLOR_SENSOR, &Test_testColorSensor},
                     {TEST_CLASSIFIER_MODULE, &Test_testClassifierModule},
                     {TEST_LED, &Test_testLed},
+                    {TEST_LIGHTS, &Test_testLights},
                     end_of_tests};
 
   printf("Tests have started\n");
@@ -219,4 +224,39 @@ static void Test_testLed(void)
 
   printf("Terminating LED API.\n");
   Led_cleanup();
+}
+
+static void Test_testLights(void)
+{
+  struct sigaction action;
+  struct sigaction oldAction;
+  memset(&action, 0, sizeof(action));
+  action.sa_handler = &Test_handleInterruptTestLed;
+  sigaction(SIGINT, &action, &oldAction);
+
+  printf("Initializing lights.\n");
+  Lights_init();
+
+  printf("Entering idle mode.\n");
+  Lights_idle();
+
+  Timing_milliSleep(5, 0);
+
+  printf("Entering recycling mode.\n");
+  Lights_recycling();
+
+  Timing_milliSleep(5, 0);
+
+  printf("Entering recycled mode.\n");
+  Lights_recycled();
+
+  Timing_milliSleep(5, 0);
+
+  printf("Entering returning mode.\n");
+  Lights_returning();
+
+  Timing_milliSleep(5, 0);
+
+  printf("Finishing lights testing.\n");
+  Lights_cleanup();
 }
