@@ -236,6 +236,7 @@ void Lights_setRecycled(void)
 
   m_blinkInterval = RECYCLED_BLINK_INTERVAL_MS;
 }
+
 void Lights_setReturning(void)
 {
   if (m_currentMode != BLINKING_MODE) {
