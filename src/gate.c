@@ -7,7 +7,7 @@
 // Servo max and min duty cycles
 // ----------------------------------------------------------------------------
 static const char *MIN_MICRO_SERVO = "1000000";		// clockwise
-static const char *MAX_MICRO_SERVO = "2000000";	// counterclockwise
+static const char *MAX_MICRO_SERVO = "2000000";		// counterclockwise
 
 // Function prototype declarations
 // ----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ static void enableGates(void)
 	// Enable gate 1
 	Servo servo1 = Servo_getServo(gate1);
 	Servo_enableSignal(servo1, "1");
-	// Enable gate 1
+	// Enable gate 2
 	Servo servo2 = Servo_getServo(gate2);
 	Servo_enableSignal(servo2, "1");
 }
@@ -77,7 +77,7 @@ static void unenableGates(void)
 	// Unenable gate 1
 	Servo servo1 = Servo_getServo(gate1);
 	Servo_enableSignal(servo1, "0");
-	// Unenable gate 1
+	// Unenable gate 2
 	Servo servo2 = Servo_getServo(gate2);
 	Servo_enableSignal(servo2, "0");
 }
