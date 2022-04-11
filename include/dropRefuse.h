@@ -1,5 +1,5 @@
 /*
- * This drop ball module acts as an abstraction layer to the pipe.h and gate.h
+ * This drop refuse module acts as an abstraction layer to the pipe.h and gate.h
  * modules in that it may be used to simply state which refuse is being dropped
  * allowing pipe.h and gate.h to handle the details.
  **/
