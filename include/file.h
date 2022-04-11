@@ -9,7 +9,6 @@
 #define FILE_GAURD
 
 // GPIO pin manipulation file and folder MACROs
-// TODO: make these constant in the GPIO API
 #define FILE_GPIO_PATH "/sys/class/gpio"
 #define FILE_GPIO_FOLDER "/gpio"
 #define FILE_DIRECTION_FILE "/direction"
@@ -17,13 +16,6 @@
 #define FILE_EXPORT_FILE "/export"
 #define FILE_UNEXPORT_FILE "/unexport"
 #define FILE_VALUE_FILE "/value"
-
-// PWM pin manipulation file and folder MACROs
-// TODO: make these constant in the PWM API
-#define FILE_PWM_PATH "/sys/class/pwm"
-#define FILE_PERIOD_FILE "/period"
-#define FILE_DUTY_CYCLE_FILE "/duty_cycle"
-#define FILE_ENABLE_FILE "/enable"
 
 // LED manipulation files
 #define FILE_LED_BASEPATH "/sys/class/leds"
