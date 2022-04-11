@@ -7,6 +7,14 @@
 #ifndef _DROP_REFUSE_HEADER_h
 #define _DROP_REFUSE_HEADER_h
 
+// Initialization/cleanup functions
+// ----------------------------------------------------------------------------
+void DROP_REFUSE_init(void);
+void DROP_REFUSE_cleanup(void);
+
+// Behavior
+// ----------------------------------------------------------------------------
+
 // Drops the garbage (red ball) in the garbage shute.
 void DROP_REFUSE_dropGarbage(void);
 
