@@ -12,9 +12,9 @@
 void Gate_init(void);
 
 // Raises the gate respective of the gate number.
-void Gate_raisesGate(const int gateNumber);
+void Gate_raisesGate(const int _gateNumber);
 
 // Lowers the gate respective of the gate number.
-void Gate_lowersGate(const int gateNumber);
+void Gate_lowersGate(const int _gateNumber);
 
 #endif
