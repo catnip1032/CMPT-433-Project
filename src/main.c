@@ -1,7 +1,12 @@
+#include "../include/servo.h"
 #include <stdio.h>
 
 int main()
 {
-  printf("Hello World!!");
+  
+  Servo_init();
+
+  Servo_cleanup();
+
   return 0;
 }
