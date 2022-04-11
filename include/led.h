@@ -1,3 +1,6 @@
+/*  This API enables basic interfacing with the BB leds. Current functions are
+    simplistic and rudimentary, but the API gives enough room for extension.
+   */
 #ifndef _LED_H_
 #define _LED_H_
 
