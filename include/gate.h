@@ -16,7 +16,7 @@ typedef enum { gate1, gate2 } eGateNum;
 void Gate_init(void);
 void Gate_cleanup(void);
 
-// Behavior functions
+// Behaviour functions
 // ----------------------------------------------------------------------------
 // Raises the gate respective of the gate number.
 void Gate_raisesGate(eGateNum gateToRaise);

@@ -13,7 +13,7 @@
 void Pipe_init(void);
 void Pipe_cleanup(void);
 
-// Behavior functions
+// Behaviour functions
 // ----------------------------------------------------------------------------
 // Resets the pipe position by turning the arm attachment on the TowerPro
 // SG-5010 clockwise until the arm reaches it's initial position.
