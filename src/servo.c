@@ -1,5 +1,6 @@
 #include "../include/servo.h"
 #include "../include/file.h"
+#include "../include/timing.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -30,9 +31,6 @@ static const char *SERVO_PERIOD = "20000000"; // 20ms as specified by servo docs
 // TODO: Move to gate and pipe design modules when created
 // static const int MIN_TOWER_SERVO = 470000;		// clockwise
 // static const int MAX_TOWER_SERVO = 2400000;		// counterclockwise
-
-// static const int MIN_MICRO_SERVO = 1000000;		// clockwise
-// static const int MAX_MICRO_SERVO = 20000000;	// counterclockwise
 
 // List of servos and list length
 // ----------------------------------------------------------------------------
@@ -76,6 +74,7 @@ void Servo_init(void)
 		setPWMChip(servos[i]);
 		// Export EHRPWM pin
 		exportPWMChip(servos[i]);
+		Timing_nanoSleep(0, 500000000);
 		// Set servo period
 		setServoPeriod(servos[i], SERVO_PERIOD);
 	}
@@ -97,7 +96,7 @@ void Servo_cleanup(void)
 	}
 }
 
-void Servo_changeDutyCycle(Servo _servo, char *_newDutyCycle)
+void Servo_changeDutyCycle(Servo _servo, const char *_newDutyCycle)
 {
 	writeToServo(_servo, DUTY_CYCLE_FILE, _newDutyCycle);
 }
@@ -106,6 +105,17 @@ void Servo_changeDutyCycle(Servo _servo, char *_newDutyCycle)
 void Servo_enableSignal(Servo _servo, char *_newSignal) 
 {
 	writeToServo(_servo, ENABLE_FILE, _newSignal);
+}
+
+Servo Servo_getServo(int _servoIndex)
+{
+	if (_servoIndex < SERVOS_LISTED && _servoIndex > 0){
+		return servos[_servoIndex];
+	}
+	else {
+		printf("Error: Must select servo index of 0-2.\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 // Private Functions
