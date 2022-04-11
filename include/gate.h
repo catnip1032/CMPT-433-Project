@@ -9,9 +9,9 @@
 
 // Gate enumerator to specify between gates 1 and gate 2.
 typedef enum gate {
-    gate1,
-    gate2
-    };
+  gate1,
+  gate2
+};
 
 // Initializes the gates 1 and 2 by setting the position of the arms on the 
 // Micro Servo 98 SG90's to their initial positions where the gates are up.
