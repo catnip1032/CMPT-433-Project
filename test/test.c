@@ -238,22 +238,22 @@ static void Test_testLights(void)
   Lights_init();
 
   printf("Entering idle mode.\n");
-  Lights_idle();
+  Lights_setIdle();
 
   Timing_milliSleep(5, 0);
 
   printf("Entering recycling mode.\n");
-  Lights_recycling();
+  Lights_setRecycling();
 
   Timing_milliSleep(5, 0);
 
   printf("Entering recycled mode.\n");
-  Lights_recycled();
+  Lights_setRecycled();
 
   Timing_milliSleep(5, 0);
 
   printf("Entering returning mode.\n");
-  Lights_returning();
+  Lights_setReturning();
 
   Timing_milliSleep(5, 0);
 
