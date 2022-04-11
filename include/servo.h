@@ -21,8 +21,6 @@ typedef struct Servo {
 	char *type;
 } Servo;
 
-void Servo_runTest(void);
-
 // Intializes the 1 TowerPro SG-5010 and 2 Micro Servo 98 SG90 servos by
 // finding the pwmchip path, exporting the pwm for the pwmchip, and setting the 
 // period.
@@ -34,7 +32,10 @@ void Servo_cleanup(void);
 
 // Can be used to move the servos in clockwise or counterclockwise direction by
 // changing the duty cycle.
-void Servo_changeDutyCycle(Servo _servo, char *_newDutyCycle);
+void Servo_changeDutyCycle(Servo _servo, const char *_newDutyCycle);
+
+// Get servo in the servo list via index.
+Servo Servo_getServo(int servoIndex);
 
 // Sends a signal to the pwm 'enable' file to enable or disable access to the 
 // pwm. 
