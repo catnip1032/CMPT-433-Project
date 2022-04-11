@@ -114,18 +114,39 @@ number for the color sensor.");
 
 void Main_stageIdle(void)
 {
+  printf("\nEntering idle stage.\n");
   Lights_setIdle();
   ClassifierModule_waitUntilRefuseItemAppears();
+  printf("Object detected!\n");
 }
 
 void Main_stageCategorizing(void)
 {
+  printf("\nEntering sorting stage.\n");
   Lights_setRecycling();
   m_itemType = ClassifierModule_getRefuseItemType();
+
+  char *objectTypeStr;
+  switch (m_itemType) {
+  case CLASSIFIER_MODULE_GARBAGE:
+    objectTypeStr = "garbage";
+    break;
+  case CLASSIFIER_MODULE_COMPOST:
+    objectTypeStr = "compost";
+    break;
+  case CLASSIFIER_MODULE_RECYCLING:
+    objectTypeStr = "recycling";
+    break;
+  default:
+    objectTypeStr = "unknown";
+  }
+
+  printf("Object of type %s detected.\n", objectTypeStr);
 }
 
 void Main_stageSorting()
 {
+  printf("\nEntering sorting stage\n");
   Lights_setRecycling();
 
   m_closeGate = true;
@@ -148,7 +169,11 @@ void Main_stageSorting()
   }
 
   if (m_closeGate) {
+    printf("Lowering gate %d.\n", m_gateToLower);
     Gate_lowersGate(m_gateToLower);
+  }
+  else {
+    printf("Not lowering any gates.\n");
   }
 
   Timing_milliSleep(3, 0);
@@ -156,7 +181,10 @@ void Main_stageSorting()
 
 void Main_stageDisposing(void)
 {
+  printf("\nEntering disposal stage.\n");
   Lights_setRecycled();
+
+  printf("Rotating pipe to drop the object.\n");
   Pipe_rotatePipeToDropBall();
 
   Timing_milliSleep(2, 0);
@@ -164,10 +192,14 @@ void Main_stageDisposing(void)
 
 void Main_stageReturning(void)
 {
+  printf("\nEntering return stage.\n");
   Lights_setReturning();
+
+  printf("Rotating the pipe to original position.\n");
   Pipe_resetPipePosition();
 
   if (m_closeGate) {
+    printf("Rising gate %d to original position.\n", m_gateToLower);
     Gate_raisesGate(m_gateToLower);
   }
 }
