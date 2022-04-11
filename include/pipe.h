@@ -11,6 +11,9 @@
 // Initializes the pipe by setting the position of the arm on the TowerPro
 // SG-5010 to it's initial position.
 void Pipe_init(void);
+
+// Sets pipe motor arm back to it's initial position and disables the 
+// associated pwm.
 void Pipe_cleanup(void);
 
 // Behaviour functions
