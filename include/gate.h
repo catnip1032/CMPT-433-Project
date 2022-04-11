@@ -15,7 +15,7 @@ typedef enum { gate1 = 1, gate2 = 2 } eGateNum;
 // Micro Servo 98 SG90's to their initial positions where the gates are up.
 void Gate_init(void);
 
-// Sets gate 1 and 2's arms to a resting position where the gate are down.
+// Sets gate 1 and 2's arms to their resting position where the gates are down.
 void Gate_cleanup(void);
 
 // Behaviour functions
