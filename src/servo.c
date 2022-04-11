@@ -26,12 +26,6 @@ static const char P8_PIN_13 = '1';		// EHRPWM2B, 1 for B
 // ----------------------------------------------------------------------------
 static const char *SERVO_PERIOD = "20000000"; // 20ms as specified by servo docs
 
-// Servo max and min duty cycles
-// ----------------------------------------------------------------------------
-// TODO: Move to gate and pipe design modules when created
-// static const int MIN_TOWER_SERVO = 470000;		// clockwise
-// static const int MAX_TOWER_SERVO = 2400000;		// counterclockwise
-
 // List of servos and list length
 // ----------------------------------------------------------------------------
 static struct Servo servos[] = {
@@ -109,7 +103,7 @@ void Servo_enableSignal(Servo _servo, char *_newSignal)
 
 Servo Servo_getServo(int _servoIndex)
 {
-	if (_servoIndex < SERVOS_LISTED && _servoIndex > 0){
+	if (_servoIndex < SERVOS_LISTED && _servoIndex >= 0){
 		return servos[_servoIndex];
 	}
 	else {
