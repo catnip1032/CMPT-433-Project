@@ -11,4 +11,6 @@
 // Pause the thread execution for seconds + nanoseconds;
 void Timing_nanoSleep(int64_t _seconds, int64_t _nanoseconds);
 
+void Timing_milliSleep(int64_t _seconds, int64_t _milliseconds);
+
 #endif
