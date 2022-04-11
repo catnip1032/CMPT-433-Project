@@ -21,9 +21,9 @@ void Gate_cleanup(void);
 // Behaviour functions
 // ----------------------------------------------------------------------------
 // Raises the gate respective of the gate number.
-void Gate_raisesGate(eGateNum gateToRaise);
+void Gate_raisesGate(eGateNum _gateToRaise);
 
 // Lowers the gate respective of the gate number.
-void Gate_lowersGate(eGateNum gateToLower);
+void Gate_lowersGate(eGateNum _gateToLower);
 
 #endif
