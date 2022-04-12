@@ -6,8 +6,8 @@
 
 // Servo max and min duty cycles
 // ----------------------------------------------------------------------------
-static const char *MIN_MICRO_SERVO = "1000000";		// clockwise
-static const char *MAX_MICRO_SERVO = "2000000";		// counterclockwise
+static const char *MAX_MICRO_SERVO = "1000000";		// clockwise
+static const char *MIN_MICRO_SERVO = "2000000";		// counterclockwise
 
 // Function prototype declarations
 // ----------------------------------------------------------------------------
