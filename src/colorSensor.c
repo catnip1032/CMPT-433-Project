@@ -58,7 +58,7 @@ static int32_t m_i2cFileBusDescriptor;
 static int32_t m_baselineLuminance;
 
 // Distance away from baseline to detect if object is in front
-static int32_t OBJECT_IN_FRONT_THRESHOLD = 200;
+static uint32_t m_objectSensingThreshold;
 
 // Number of readings to take for calibration
 const size_t MAX_CALIBRATION_READINGS = 10;
@@ -66,8 +66,9 @@ const size_t MAX_CALIBRATION_READINGS = 10;
 // Interval between calibration reads
 const uint64_t CALIBRATION_READ_INTERVAL_NS = 250000000; // 0.25 seconds
 
-void ColorSensor_init(uint32_t _i2cBusNum)
+void ColorSensor_init(uint32_t _i2cBusNum, uint32_t _objectSensingThreshold)
 {
+  m_objectSensingThreshold = _objectSensingThreshold;
   m_i2cFileBusDescriptor =
       I2c_initI2cDevice(_i2cBusNum, COLOR_SENSOR_DEVICE_ADDRESS);
   I2c_writeI2cReg(m_i2cFileBusDescriptor, SELECT_ENABLE_REGISTER_ADDRESS,
@@ -148,7 +149,7 @@ bool ColorSensor_isObjectInFrontOfSensor(void)
 
   return abs(m_baselineLuminance -
              luminanceValuesOut[AMBIENT_LIGHT_LUMINANCE_OUT_INDEX]) >=
-         OBJECT_IN_FRONT_THRESHOLD;
+         m_objectSensingThreshold;
 }
 
 eColorSensorColor ColorSensor_getColor(void)
