@@ -5,7 +5,7 @@
 
 // Servo max and min duty cycles
 // ----------------------------------------------------------------------------
-static const char *MIN_PIPE_SERVO = "470000";			// clockwise
+static const char *MIN_PIPE_SERVO = "500000";			// clockwise
 static const char *MAX_PIPE_SERVO = "2300000";		// counterclockwise
 
 // Servo index for pipe
