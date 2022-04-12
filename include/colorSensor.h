@@ -15,9 +15,11 @@ typedef enum {
   COLOR_SENSOR_BLUE,
 } eColorSensorColor;
 
-// i2cBusNum is the i2c bus number that the color sensor is attached to
+// i2cBusNum is the i2c bus number that the color sensor is attached to.
+// _objectSensingThreshold determines how sensitive the color sensor is at
+// detecting objects in front of it (lower = more sensitive).
 // function blocks temporarily due to initial calibration
-void ColorSensor_init(uint32_t _i2cBusNum);
+void ColorSensor_init(uint32_t _i2cBusNum, uint32_t _objectSensingThreshold);
 void ColorSensor_cleanup(void);
 
 /* Output buffer must be 5 int32_t's in size. The first element will contain
