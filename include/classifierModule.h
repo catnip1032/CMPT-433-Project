@@ -13,7 +13,8 @@ typedef enum {
   CLASSIFIER_MODULE_RECYCLING,
 } eClassifierModule_RefuseItemType;
 
-void ClassifierModule_init(uint32_t _colorSensorI2cBusNumber);
+void ClassifierModule_init(uint32_t _colorSensorI2cBusNumber,
+  uint32_t _objectSensingThreshold);
 void ClassifierModule_cleanup(void);
 
 // Blocking function that returns once the refuse item is
