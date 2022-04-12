@@ -2,6 +2,7 @@
 #include "../include/gate.h"
 #include "../include/lights.h"
 #include "../include/pipe.h"
+#include "../include/servo.h"
 #include "../include/timing.h"
 
 #include <getopt.h>
@@ -27,9 +28,7 @@ eClassifierModule_RefuseItemType m_itemType;
 
 static uint32_t m_colorSensorI2CNumber;
 static bool m_colorSensorOptFlag = false;
-
-static eGateNum m_gateToLower = gate1;
-static bool m_closeGate = true;
+static uint32_t m_objectSensingThreshold;
 
 // Main
 // ----------------------------------------------------------------------------
@@ -57,13 +56,14 @@ continue execution.\n");
 // ----------------------------------------------------------------------------
 void Main_initialize(void)
 {
-  printf("Initializing recycler.");
+  printf("Initializing recycler.\n");
 
   Main_setupInterrupt();
 
+  Servo_init();
   Gate_init();
   Pipe_init();
-  ClassifierModule_init(m_colorSensorI2CNumber);
+  ClassifierModule_init(m_colorSensorI2CNumber, m_objectSensingThreshold);
   Lights_init();
 }
 
@@ -73,6 +73,7 @@ void Main_cleanup(int _signal)
 
   Gate_cleanup();
   Pipe_cleanup();
+  Servo_cleanup();
   ClassifierModule_cleanup();
   Lights_cleanup();
 }
@@ -90,7 +91,7 @@ void Main_getOpts(int argc, char **argv)
 {
   int opt;
 
-  while ((opt = getopt(argc, argv, "i:h")) != -1) {
+  while ((opt = getopt(argc, argv, "t:i:h")) != -1) {
     switch (opt) {
     case 'i':
       m_colorSensorI2CNumber = atoi(optarg);
@@ -98,9 +99,13 @@ void Main_getOpts(int argc, char **argv)
       break;
     case 'h':
       printf("Call this program with '-i num', where num is the i2c bus \
-number for the color sensor.");
+      number for the color sensor. Use the '-t num' to set the object sensing \
+			threshold.");
       exit(EXIT_SUCCESS);
       break;
+		case 't':
+			m_objectSensingThreshold = atoi(optarg);
+			break;
     case '?':
       printf("Unknown option %c.\n", optopt);
     case ':':
@@ -118,6 +123,9 @@ void Main_stageIdle(void)
   Lights_setIdle();
   ClassifierModule_waitUntilRefuseItemAppears();
   printf("Object detected!\n");
+
+	// Wait until the ball is in place to get a better color reading
+	Timing_milliSleep(0, 700);
 }
 
 void Main_stageCategorizing(void)
@@ -149,31 +157,26 @@ void Main_stageSorting()
   printf("\nEntering sorting stage\n");
   Lights_setRecycling();
 
-  m_closeGate = true;
-  m_gateToLower = gate1;
-
   switch (m_itemType) {
-  case CLASSIFIER_MODULE_RECYCLING:
-    m_gateToLower = gate1;
-    break;
-  case CLASSIFIER_MODULE_GARBAGE:
-    m_gateToLower = gate2;
-    break;
   case CLASSIFIER_MODULE_COMPOST:
-    m_closeGate = false;
+    printf("Compost, lowering gate %d.\n", gate1);
+    Gate_lowersGate(gate1);
     break;
+
+  case CLASSIFIER_MODULE_RECYCLING: // Should be lowering both gates
+    printf("Recycling, lowering gate %d and %d.\n", gate1, gate2);
+    Gate_lowersGate(gate1);
+    Gate_lowersGate(gate2);
+    break;
+
+  case CLASSIFIER_MODULE_GARBAGE:
+    printf("Garbage, not lowering any gates.\n");
+    break;
+
   default:
     fprintf(stderr, "Uncaught classifier module type %d. Terminating.\n",
             m_itemType);
     abort();
-  }
-
-  if (m_closeGate) {
-    printf("Lowering gate %d.\n", m_gateToLower);
-    Gate_lowersGate(m_gateToLower);
-  }
-  else {
-    printf("Not lowering any gates.\n");
   }
 
   Timing_milliSleep(3, 0);
@@ -198,8 +201,10 @@ void Main_stageReturning(void)
   printf("Rotating the pipe to original position.\n");
   Pipe_resetPipePosition();
 
-  if (m_closeGate) {
-    printf("Rising gate %d to original position.\n", m_gateToLower);
-    Gate_raisesGate(m_gateToLower);
-  }
+	// Wait for pipe to return before fully
+	Timing_milliSleep(1, 500);
+
+	printf("Rising gates to their original positions.\n");
+	Gate_raisesGate(gate1);
+	Gate_raisesGate(gate2);
 }
