@@ -7,12 +7,13 @@
 #include "../include/timing.h"
 #include <stdint.h>
 
-static const uint32_t WAIT_UNTIL_REFUSE_ITEM_APPEARS_SLEEP_INTERVAL_NS =
-    250000000; // 0.25 sec
+static const uint32_t WAIT_UNTIL_REFUSE_ITEM_APPEARS_SLEEP_INTERVAL_MS =
+    150; // 0.15 sec
 
-void ClassifierModule_init(uint32_t _colorSensorI2cBusNumber)
+void ClassifierModule_init(uint32_t _colorSensorI2cBusNumber,
+  uint32_t _objectSensingThreshold)
 {
-  ColorSensor_init(_colorSensorI2cBusNumber);
+  ColorSensor_init(_colorSensorI2cBusNumber, _objectSensingThreshold);
 }
 
 void ClassifierModule_cleanup(void)
@@ -27,7 +28,7 @@ void ClassifierModule_waitUntilRefuseItemAppears(void)
   bool hasRefuseAppeared;
   do {
     hasRefuseAppeared = ColorSensor_isObjectInFrontOfSensor();
-    Timing_nanoSleep(0, WAIT_UNTIL_REFUSE_ITEM_APPEARS_SLEEP_INTERVAL_NS);
+    Timing_milliSleep(0, WAIT_UNTIL_REFUSE_ITEM_APPEARS_SLEEP_INTERVAL_MS);
   } while (!hasRefuseAppeared);
 }
 
