@@ -11,9 +11,10 @@ This directory SHOULD NOT be committed.
 ## Style and Other Guidelines
 - Indentation: 2 columns (tab).
 - Wrap at 80 characters.
-- R&K brackets style:
+- Allman brackets style:
 ```
-if (condition) {
+if (condition) 
+{
 	action
 }
 ```
