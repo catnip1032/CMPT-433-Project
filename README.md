@@ -114,6 +114,7 @@ and "issue-name" is the respective issue name.
  - Make use of git issues to comment on each other's work as needed.
 
 ## Tests
-Must be written...
-
+Unitary tests are encouraged to be written in the file `test/test.c`. The code
+suggests a layout to be followed for unitary tests. More information can be
+found in the file comments.
 
